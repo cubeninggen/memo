@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "memo") // 매핑할 테이블의 이름을 지정
 @NoArgsConstructor
-public class Memo {
+public class Memo extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,14 +19,21 @@ public class Memo {
     private String username;
     @Column(name = "contents", nullable = false, length = 500)
     private String contents;
+    @Column(name = "title", nullable = false, length = 100)
+    private String title;
+    @Column(name = "password" )
+    private int password;
 
     public Memo(MemoRequestDto requestDto) {
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
+        this.title = requestDto.getTitle();
+        this.password = requestDto.getPassword();
     }
 
     public void update(MemoRequestDto requestDto) {
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
+        this.title = requestDto.getTitle();
     }
 }

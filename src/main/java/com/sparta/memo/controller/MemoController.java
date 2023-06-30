@@ -2,10 +2,12 @@ package com.sparta.memo.controller;
 
 import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
+import com.sparta.memo.entity.Memo;
 import com.sparta.memo.service.MemoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -27,13 +29,17 @@ public class MemoController {
         return memoService.getMemos();
     }
 
+    @GetMapping("/memos/{id}")
+    public Optional<Memo> getMemoById(@PathVariable Long id) {
+        return memoService.getMemoById(id);
+    }
     @PutMapping("/memos/{id}")
-    public Long updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
+    public MemoResponseDto updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
         return memoService.updateMemo(id, requestDto);
     }
 
     @DeleteMapping("/memos/{id}")
-    public Long deleteMemo(@PathVariable Long id) {
-        return memoService.deleteMemo(id);
+    public String deleteMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
+        return memoService.deleteMemo(id, requestDto);
     }
 }
